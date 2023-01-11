@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+
+<div class="container">
+    <div class="card">
+      <img src="{{ profile.image.url }}" alt="Person" class="card__image">
+      <p class="card__name">{{ profile.user.username }}</p>
+      <div class="grid-container">
+  
+        <div class="grid-child-posts">
+            <p style="color:black">Posts: {{ profile.get_posts }}</p>
+        </div>
+  
+        <div class="grid-child-followers">
+          <a href="{% url 'user_followers' profile.pk %}">
+          <p style="color:black">Followers: {{ profile.get_followers }}</p>
+          </a>
+        </div>
+  
+      </div>
+      {% if request.user in profile.followers.all %}
+      <a href="{% url 'add_follow' profile.pk %}">
+        <button class="btn draw-border">Unfollow</button>
+    </a>
+    {% if posts %}
+    <h2>POSTS:</h2>
+        {% for post in posts %}
+            <p>{{ post.content }}</p>
+        {% endfor %}
+    {% endif %}
+      {% else %}
+      <p>Follow him to see his posts<p>
+      <a href="{% url 'add_follow' profile.pk %}">
+      <button class="btn draw-border">Follow</button>
+      </a>
+      {% endif %}
+
+    </div>
+   
+  
+{% endblock content %}

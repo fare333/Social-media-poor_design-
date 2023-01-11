@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for follower in followers %}
+<a href="{% url 'get_profiles' follower.sender.pk %}">
+        <img width="100" height="100" src="{{ follower.sender.image.url }}" />
+        <p>{{ follower.sender.user.username }}</p>
+</a>
+{% endfor %}
+{% endblock content %}

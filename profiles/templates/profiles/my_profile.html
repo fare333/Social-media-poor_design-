@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+
+<div class="container">
+    <div class="card">
+      <img src="{{ profile.image.url }}" alt="Person" class="card__image">
+      <p class="card__name">{{ profile.user.username }}</p>
+      <div class="grid-container">
+  
+        <div class="grid-child-posts">
+            <p style="color:white">Posts: {{ profile.get_posts }}</p>
+        </div>
+  
+        <div class="grid-child-followers">
+          <a href="{% url 'all_user_followers' %}">
+          <p style="color:white">Followers: {{ profile.get_followers }}</p>
+          </a>
+        </div>
+
+        <div class="grid-child-followers">
+          <p style="color:white">Profile bio: {{ profile.bio }}</p>
+        </div>
+  
+      </div>
+      {% if posts %}
+      <h2>POSTS:</h2>
+          {% for post in posts %}
+              <p>{{ post.content }}</p>
+          {% endfor %}
+      {% endif %}
+      <a href="{% url 'edit_profile' %}"><button class="btn btn-sm btn-primary">Edit Profile</button></a>
+
+    </div>
+  
+{% endblock content %}

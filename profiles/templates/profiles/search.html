@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for profile in profiles %}
+<a href="{% url 'get_profiles' profile.pk %}">
+<img src="{{ profile.image.url }}" />
+<p>{{ profile.user.username }}</p>
+</a>
+{% endfor %}
+{% endblock content %}
