@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+    {% for follow in following %}
+        <a href="{% url 'get_profiles' follow.receiver.pk %}">
+            <img width="100" height="100" src="{{ follow.receiver.image.url }}" />
+            {{ follow.receiver.first_name }}
+        </a>
+        <br></br>
+    {% endfor %}
+
+{% endblock content %}

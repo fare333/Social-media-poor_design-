@@ -34,7 +34,10 @@ def edit_profile(request):
 def get_profiles(request,pk):
     profile = Profile.objects.get(pk=pk)
     posts = Post.objects.filter(author=profile)
-    context = {'profile':profile,'posts':posts}
+    
+    following = Followers.objects.filter(sender=profile)
+    foll = following.count()
+    context = {'profile':profile,'posts':posts,"foll":foll}
     return render(request, 'profiles/get_profiles.html',context)
 
 @login_required(login_url='account_login')
@@ -69,15 +72,23 @@ def add_follow(request,pk):
         follow.delete()
     return redirect('get_profiles',pk=pk)
 
-
+@login_required(login_url='account_login')
 def all_user_followers(request):
     profile = Profile.objects.get(user=request.user)
     followers = Followers.objects.filter(receiver=profile)
     context = {'followers':followers}
     return render(request, 'profiles/all_user_followers.html',context)
 
+@login_required(login_url='account_login')
 def user_followers(request,pk):
     profile = Profile.objects.get(pk=pk)
     followers = Followers.objects.filter(receiver=profile)
     context = {'followers':followers}
     return render(request, 'profiles/user_followers.html',context)
+
+@login_required(login_url='account_login')
+def following(request,pk):
+    profile = Profile.objects.get(pk=pk)
+    following = Followers.objects.filter(sender=profile)
+    context = {'following':following}
+    return render(request, 'profiles/following.html',context)

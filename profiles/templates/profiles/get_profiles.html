@@ -17,8 +17,10 @@
           <a href="{% url 'user_followers' profile.pk %}">
           <p style="color:black">Followers: {{ profile.get_followers }}</p>
           </a>
+          <p style="color:black">{{ profile.get_following }}</p>
         </div>
-  
+        <a href="{% url 'following' profile.pk %}"><p style="color:black">Following: {{ foll }}</p></a>
+
       </div>
       {% if request.user in profile.followers.all %}
       <a href="{% url 'add_follow' profile.pk %}">

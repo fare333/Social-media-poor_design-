@@ -23,7 +23,10 @@ class Profile(models.Model):
     def get_followers(self):
         return self.followers.all().count()
     
+
+    
 class Followers(models.Model):
     sender = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name="sender")
     receiver = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name="receiver")
+    
     
